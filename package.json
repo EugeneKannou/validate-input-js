@@ -1,5 +1,5 @@
 {
-  "name": "validate-input",
+  "name": "@eugenekannou/validate-input",
   "version": "0.5.0",
   "description": "Simple library that provides functions to validate the input and password scoring",
   "main": "index.js",
@@ -11,5 +11,9 @@
     "test": "mocha"
   },
   "author": "Eugene Kannou",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EugeneKannou/validate-input-js.git"
+  }
 }
