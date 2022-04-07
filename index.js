@@ -5,10 +5,10 @@
  * 
  * @param {password} string 
  */
-function passwordScoring(password, minL=0, maxL=999) {
+function passwordScoring(password, minL = 0, maxL = 999) {
     let score = 0;
 
-    if (/\s/.test(password) || password.length < minL || password.length > maxL){
+    if (/\s/.test(password) || password.length < minL || password.length > maxL) {
         return score;
     }
     if (/[a-z]+/.test(password)) {
@@ -54,9 +54,54 @@ function isNotBlank(string) {
     return true;
 }
 
+class customValidation {
+    constructor(rules) {
+        this.rules = rules;
+    }
+
+    validate(item) {
+        const rules = this.rules;
+
+        const validity = rules.map((rule) => {
+            return this._validators[rule.type](item, rule.rule);
+        });
+
+        return validity.every((e) => e == true);
+    }
+
+    _validators = {
+        // rule is regex
+        regex: function (value, regex) {
+            const rule = new RegExp(regex);
+            return rule.test(value);
+        },
+        // rules is array of values
+        isEqualToAny: function (value, rules) {
+            const validity = rules.map((rule) => {
+                return (value === rule);
+            });
+            return validity.includes(true);
+        },
+        // rule is object with two not 
+        inRange: function (value, rule) {
+            return (value >= rule.min && value <= rule.max);
+        },
+        notInRange: function (value, rule) {
+            return !(value >= rule.min && value <= rule.max);
+        }
+    }
+}
+
+/**
+ * {
+ *    type: 'regex | isEqualToAny | inRange | notInRange'
+ *    val: string/regex/int
+ * }
+ */
 module.exports = {
     passwordScoring,
     hasWhitespaces,
     isEmail,
-    isNotBlank
+    isNotBlank,
+    customValidation
 };

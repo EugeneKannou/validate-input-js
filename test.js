@@ -67,3 +67,34 @@ describe('Is not blank?', function () {
         assert.equal(validator.isNotBlank("god	bless JavaScript"), true)
     });
 });
+
+describe('Custom validation', function () {
+    it('Should return true if validated item is equal to any of the items', function () {
+        const customValidation = new validator.customValidation([{
+            type: "isEqualToAny",
+            rule: [1, 2, 3, 4]
+        }]);
+        assert.equal(customValidation.validate(1), true)
+    });
+    it('Should return true if string passes the regex validation', function () {
+        const customValidation = new validator.customValidation([{
+            type: "regex",
+            rule: "^asdf$"
+        }]);
+        assert.equal(customValidation.validate("asdf"), true)
+    });
+    it('Should return true if val is between min and max', function () {
+        const customValidation = new validator.customValidation([{
+            type: "inRange",
+            rule: {min: 10, max: 10000}
+        }]);
+        assert.equal(customValidation.validate(100), true)
+    });
+    it('Should return true if val is not between min and max', function () {
+        const customValidation = new validator.customValidation([{
+            type: "notInRange",
+            rule: {min: 10, max: 10000}
+        }]);
+        assert.equal(customValidation.validate(0), true)
+    });
+});
