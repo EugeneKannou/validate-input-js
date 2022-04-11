@@ -23,6 +23,7 @@ function passwordScoring(password, minL = 0, maxL = 999) {
     if (/[!@#\$%\^&\*()_\+\-=\[\]{};':"\\\|,.<>\/?]+/.test(password)) {
         score += 1;
     }
+
     return score;
 }
 
@@ -70,25 +71,25 @@ class customValidation {
     }
 
     _validators = {
-        // rule is regex
         regex: function (value, regex) {
             const rule = new RegExp(regex);
             return rule.test(value);
         },
-        // rules is array of values
         isEqualToAny: function (value, rules) {
             const validity = rules.map((rule) => {
                 return (value === rule);
             });
             return validity.includes(true);
         },
-        // rule is object with two not 
         inRange: function (value, rule) {
             return (value >= rule.min && value <= rule.max);
         },
         notInRange: function (value, rule) {
             return !(value >= rule.min && value <= rule.max);
-        }
+        },
+        hasWhitespaces,
+        isEmail,
+        isNotBlank
     }
 }
 

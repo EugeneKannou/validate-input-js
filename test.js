@@ -52,7 +52,7 @@ describe('Password scoring', function () {
     });
 });
 
-describe('Is not blank?', function () {
+describe('Is not blank', function () {
     it('Should return false if string does not contains something except space-like characters', function () {
         assert.equal(validator.isNotBlank(" "), false)
         assert.equal(validator.isNotBlank("	"), false)
@@ -96,5 +96,21 @@ describe('Custom validation', function () {
             rule: {min: 10, max: 10000}
         }]);
         assert.equal(customValidation.validate(0), true)
+    });
+    it('Should return true if custom validation result is equal to standalone function', function () {
+        const isNotBlankValidation = new validator.customValidation([{
+            type: "isNotBlank",
+        }]);
+        assert.equal(isNotBlankValidation.validate("asdf"), validator.isNotBlank("asdf"))
+        
+        const hasWhitespacesValidation = new validator.customValidation([{
+            type: "hasWhitespaces",
+        }]);
+        assert.equal(hasWhitespacesValidation.validate(" asdf "), validator.hasWhitespaces(" asdf "))
+
+        const isEmailValidation = new validator.customValidation([{
+            type: "isEmail",
+        }]);
+        assert.equal(isEmailValidation.validate("asdf@gmail.com"), validator.isEmail("asdf@gmail.com"))
     });
 });
